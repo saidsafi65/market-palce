@@ -10,7 +10,7 @@
  
 @section('Direction','Home')
 
-@section('Main-Titel','Main Page')
+@section('Main-Titel','Index')
 
 <!-- ********************************************** -->
 
