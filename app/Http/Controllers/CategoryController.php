@@ -13,6 +13,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $categories = Category::all();
+        return response()->view('dashboard.category.index',['categories'=>$categories]);
     }
 
     /**
@@ -21,6 +23,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        return response()->view('dashboard.category.creat');
     }
 
     /**

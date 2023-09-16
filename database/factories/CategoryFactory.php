@@ -18,6 +18,9 @@ class CategoryFactory extends Factory
     {
         return [
             //
+            'title' =>$this->faker->unique()->jobTitle(),
+            'is_active' =>$this->faker->boolean(),
+
         ];
     }
 }

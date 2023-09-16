@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,6 @@ Route::get('/', function () {
 Route::get('/index', function () {
     return view('dashboard.pages.index');
 });
+
+Route::get('/category',[CategoryController::class,'index'])->name('category.index');
+Route::get('/category/creat',[CategoryController::class,'create'])->name('category.creat');
