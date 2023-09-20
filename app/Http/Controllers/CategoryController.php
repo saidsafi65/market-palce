@@ -84,7 +84,6 @@ class CategoryController extends Controller
             'title' => "required|string|min:3|max:30|unique:categories,title,$id"
         ]);
 
-
         // For save The chickBox as int
         if ($request->input('is_active') == 'on') {
             $active = true;
