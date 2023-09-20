@@ -28,3 +28,6 @@ Route::get('/index', function () {
 
 Route::get('/category',[CategoryController::class,'index'])->name('category.index');
 Route::get('/category/creat',[CategoryController::class,'create'])->name('category.creat');
+Route::post('/category/store',[CategoryController::class,'store'])->name('category.store');
+Route::get('/category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
+Route::put('/category/update/{id}',[CategoryController::class,'update'])->name('category.update');

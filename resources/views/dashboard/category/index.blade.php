@@ -49,7 +49,7 @@
             <td>{{ $categories->updated_at->format('Y-M-d') }}</td>
             <td><span class="badge badge-primary">{{ $categories->updated_at->format('H:i A') }}</span></td>
             <td><div class="btn-group">
-                <button type="button" class="btn btn-info">Edit</button>
+                <a href="{{ route('category.edit',$categories->id) }}" class="btn btn-info">Edit</a>
                 <button type="button" class="btn btn-danger">Delete</button>
               </div></td>
         </tr>
