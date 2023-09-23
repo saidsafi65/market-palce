@@ -52,7 +52,6 @@ class CategoryController extends Controller
         $category->save();
 
         return redirect()->route('category.index');
-
     }
 
     /**
@@ -71,7 +70,7 @@ class CategoryController extends Controller
         //
         $category = Category::findOrFail($id);
 
-        return view('dashboard.category.edit',compact('category'));
+        return view('dashboard.category.edit', compact('category'));
     }
 
     /**
@@ -95,15 +94,21 @@ class CategoryController extends Controller
         $category->title = $request->input('title');
         $category->is_active = $active;
         $category->save();
-  
+
         return redirect()->route('category.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
         //
+        $category = Category::findOrFail($id);
+
+        $isDeleted = $category->delete();
+        if ($isDeleted) {
+            return redirect()->route('category.index');
+        }
     }
 }
