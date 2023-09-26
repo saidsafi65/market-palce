@@ -90,6 +90,7 @@
                 if (result.isConfirmed) {
                     // إذا تم التأكيد على الحذف، قم بتوجيه المتصفح إلى الرابط المحدد
                     window.location.href = '/category/destroy/' + categoryId;
+                    
                 } else if (
                     result.dismiss === Swal.DismissReason.cancel
                 ) {

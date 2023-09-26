@@ -15,7 +15,8 @@ class ProductController extends Controller
     public function index()
     {
         //
-        return view('dashboard.product.index');
+        $Products = Product::with('Category')->get();
+        return view('dashboard.product.index', compact('Products'));
     }
 
     /**
@@ -84,6 +85,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         //
+        $category = category::get();
+        return view('dashboard.product.edit', compact('product', 'category'));
     }
 
     /**
@@ -92,13 +95,56 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         //
+        $validator = validator($request->all(), [
+            'title' => "required|string|min:3|max:40|unique:products,title,$product->id",
+            'description' => "required|string|min:3|max:100",
+            'price' => "required|numeric",
+            'quantity' => "required|numeric",
+            'category_id' => "required|string|exists:categories,id"
+        ]);
+
+        // in case thers no fails save data else send error message
+        if (!$validator->fails()) {
+            $product->title = $request->get('title');
+            $product->description = $request->get('description');
+            $product->price = $request->get('price');
+            $product->quantity = $request->get('quantity');
+            $product->category_id = $request->get('category_id');
+            $isSave = $product->save();
+
+            if ($isSave) {
+                return response()->json([
+                    'message' => 'تم حفظ العنصر بنجاح',
+                ], Response::HTTP_OK);
+            } else {
+                return response()->json([
+                    'message' => 'حدث مشكلة أثناء حفظ العنصر',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+        } else {
+            // to send message to js in creat blade
+            return response()->json([
+                'message' => $validator->getMessageBag()->first(),
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
         //
+        $isDeleted = Product::findOrFail($id)->delete();
+        if ($isDeleted) {
+            return response()->json([
+                'message' => 'تم الحذف بنجاح',
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'message' => 'حدث مشكلة أثناء حذف العنصر',
+            ], Response::HTTP_BAD_REQUEST);
+        }
+        
     }
 }
