@@ -15,7 +15,13 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $Products = Product::with('Category')->get();
+        // $Products = Product::with('Category')->get();
+        // return view('dashboard.product.index', compact('Products'));
+
+        $Products = Product::doesntHave('category', 'and', function ($query) {
+            $query->where('is_active', '=', 0);
+        })->with('category')->get();
+
         return view('dashboard.product.index', compact('Products'));
     }
 
@@ -145,6 +151,5 @@ class ProductController extends Controller
                 'message' => 'حدث مشكلة أثناء حذف العنصر',
             ], Response::HTTP_BAD_REQUEST);
         }
-        
     }
 }
